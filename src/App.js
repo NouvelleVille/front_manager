@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { Button } from "react-bootstrap";
+import LoginForm from "./components/login";
+import Logout from "./components/logout";
+import RegisterForm from "./components/register";
+import { UserProvider } from "./context/user";
+import apiFetcher from "./utils/axios";
+
 
 function App() {
+
+
+  const verifyToken = () => {
+    apiFetcher.verifyToken();
+  }
+
+
+  const refreshToken = () => {
+    apiFetcher.refreshToken();
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      
+      <UserProvider>
+      <Button onClick={verifyToken}>VerifyToken</Button>
+      <Button onClick={refreshToken}>Refresh Token</Button>
+        <div className="container">
+          <Logout/>
+          <RegisterForm/>
+        <LoginForm/>
+        </div>
+      </UserProvider>
     </div>
   );
 }
