@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Form, Button } from "react-bootstrap";
 import { useUser } from "../context/user";
@@ -7,14 +7,24 @@ import UserErrors from "./user-errors";
 
 export default function RegisterForm() {
     const { register, handleSubmit, errors } = useForm();
-    const { state, signUp } = useUser();
+    const { state, dispatch, signUp } = useUser();
     const onSubmit = payload => {
         signUp(payload.signup_username, payload.signup_email, payload.signup_password);
     }
 
+    const [errors_reseted, reset_errors] = useState(false); 
+    useEffect(() => {
+        if(!errors_reseted) {
+            dispatch({type: 'resetErrors'})
+            reset_errors(true)
+        }
+    }, [errors_reseted, dispatch])
+
+
+
     return (
         <div className="row justify-content-center">
-            <div className="col-md-8 col-lg-6 col-xl-5">
+            <div className="col-md-8 col-lg-6 col-xl-3">
                 <div className="card">
                     <div className="card-body p-4">
                         <Form onSubmit={handleSubmit(onSubmit)}>

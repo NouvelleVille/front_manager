@@ -7,13 +7,13 @@ export default function UserErrors () {
     let errorMessage = '';
 
     if(state.success) {
-        successMessage = <Alert key="user-success"  variant="success">
+        successMessage = <Alert className="alert alert-success bg-success text-white border-0 show" key="user-success"  variant="success">
             {state.success}
         </Alert>
     }
 
     if (state.errors && state.errors.length === 1) {
-        errorMessage = <Alert key="users-errors" variant="danger">
+        errorMessage = <Alert className="alert alert-danger bg-danger text-white border-0 show" key="users-errors" variant="danger">
             {state.errors[0]}
         </Alert>
     } else if (state.errors && state.errors.length > 1) {

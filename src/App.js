@@ -1,35 +1,37 @@
-import { Button } from "react-bootstrap";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LoginForm from "./components/login";
 import Logout from "./components/logout";
+import AppNavbar from "./components/navbar";
 import RegisterForm from "./components/register";
 import { UserProvider } from "./context/user";
-import apiFetcher from "./utils/axios";
+
+
 
 
 function App() {
 
 
-  const verifyToken = () => {
-    apiFetcher.verifyToken();
-  }
-
-
-  const refreshToken = () => {
-    apiFetcher.refreshToken();
-  }
-
   return (
-    <div className="App">
-
-      
+    <div className="wrapper">
       <UserProvider>
-      <Button onClick={verifyToken}>VerifyToken</Button>
-      <Button onClick={refreshToken}>Refresh Token</Button>
-        <div className="container">
-          <Logout/>
-          <RegisterForm/>
-        <LoginForm/>
-        </div>
+        <Router>
+
+          <div className="container-fluid">
+            <AppNavbar />
+          </div>
+          <div className="container-fluid mt-5">
+            <Switch>
+              <Route path="/register">
+                <RegisterForm />
+              </Route>
+              <Route path="/login">
+                <LoginForm />
+              </Route>
+              <Logout />
+            </Switch>
+          </div>
+
+        </Router>
       </UserProvider>
     </div>
   );

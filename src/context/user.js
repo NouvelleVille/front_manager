@@ -149,6 +149,12 @@ function userReducer(state, action) {
                 errors: [],
                 success: null
             }
+        case 'resetErrors':
+            return {
+                ...state,
+                errors: [],
+                success: null
+            }
         default:
             throw new Error(`Unhandled action type: ${action.type}`)
     }
@@ -198,6 +204,7 @@ function useUser() {
             })
                 .then(function (response) {
                     storeCredentials(response.data.access, response.data.refresh);
+                    history.push('/');
                     dispatch({
                         type: 'signedIn',
                         username: payload.username,

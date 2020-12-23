@@ -1,1 +1,21 @@
-@import "~bootstrap/scss/bootstrap";
+@import "./node_modules/bootstrap/scss/functions";
+@import "./node_modules/bootstrap/scss/variables";
+@import "./scss/variables-dark";
+@import "./node_modules/bootstrap/scss/bootstrap";
+
+
+@import "./scss/nav";
+
+
+.Logo {
+  background-image: url(./images/logo_transparent.png);
+  background-repeat: no-repeat;
+  width: 1200px;
+  height: 1200px;
+  padding: 0;
+  }
+
+.my-auto {
+    margin-top: auto;
+    margin-bottom: auto;
+}
