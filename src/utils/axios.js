@@ -45,8 +45,9 @@ class ApiFetcher {
 
                     return Promise.reject(error);
                 }
+                
                 if (error.response.status === 401 && !originalRequest._retry) {
-
+                    console.log(originalRequest._retry);
                     originalRequest._retry = true;
 
                     return this.axiosInstance.post('api/token/refresh/', {
@@ -59,16 +60,13 @@ class ApiFetcher {
                                     access_token: res.data.access,
                                     refresh_token: res.data.refresh
                                 })
-                                // 1) put token to LocalStorage
-                                //localStorageService.setToken(res.data);
-
-                                // 2) Change Authorization header
-                                //axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorageService.getAccessToken();
-
-                                // 3) return originalRequest object with Axios.
-                                console.log(originalRequest);
                                 return axios(originalRequest);
                             }
+                        }).catch((error) => {
+                            console.log(error);
+                            this.userDispatch({
+                                type: 'tokenRefreshError'
+                            })
                         })
 
                 }

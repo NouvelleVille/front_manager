@@ -8,10 +8,16 @@ function UseUserLocalStorage() {
 
     const access_token_key = 'nouvelleville_access_token';
     const refresh_token_key = 'nouvelleville_refresh_token';
+    const username_key = 'nouvelleville_username';
 
-    const storeCredentials = (access_token, refresh_token) => {
+    const storeCredentials = (username, access_token, refresh_token) => {
+        localStorage.setItem(username_key, username);
         localStorage.setItem(access_token_key, access_token);
         localStorage.setItem(refresh_token_key, refresh_token);
+    }
+
+    const getUserName = () => {
+        return localStorage.getItem(username_key);
     }
 
     const getAccessToken = () => {
@@ -20,6 +26,10 @@ function UseUserLocalStorage() {
 
     const getRefreshToken = () => {
         return localStorage.getItem(refresh_token_key);
+    }
+
+    const setUserName = (username) => {
+        localStorage.setItem(username_key, username_key)
     }
 
     const setAccessToken = (access_token) => {
@@ -32,11 +42,12 @@ function UseUserLocalStorage() {
 
 
     const clearTokens = () => {
+        localStorage.removeItem(username_key);
         localStorage.removeItem(access_token_key);
         localStorage.removeItem(refresh_token_key);
     }
 
-    return { storeCredentials, getAccessToken, getRefreshToken, setAccessToken, setRefreshToken, clearTokens }
+    return { storeCredentials, getUserName, getAccessToken, getRefreshToken, setUserName, setAccessToken, setRefreshToken, clearTokens }
 }
 
 const init = () => {
@@ -50,9 +61,10 @@ const init = () => {
         trying: false,
     }
 
-    const { getAccessToken, getRefreshToken } = UseUserLocalStorage();
+    const { getUserName, getAccessToken, getRefreshToken } = UseUserLocalStorage();
     init_context['access_token'] = getAccessToken();
     init_context['refresh_token'] = getRefreshToken();
+    init_context['username'] = getUserName();
 
 
     return init_context;
@@ -189,6 +201,7 @@ function useUser() {
 
     const signOut = () => {
         clearTokens();
+        history.push('/');
         dispatch({
             type: 'signOut'
         })
@@ -203,7 +216,7 @@ function useUser() {
                 password: payload.password
             })
                 .then(function (response) {
-                    storeCredentials(response.data.access, response.data.refresh);
+                    storeCredentials(payload.username, response.data.access, response.data.refresh);
                     history.push('/');
                     dispatch({
                         type: 'signedIn',
