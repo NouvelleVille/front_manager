@@ -22,7 +22,7 @@ export default function LoginForm() {
 
     return (
         <div className="row justify-content-center  my-auto">
-            <div className="col-md-6 col-lg-6 col-xl-3 ">
+            <div className="col-md-6 col-lg-6 col-xl-3 mt-5">
                 <div className="card">
                     <div className="card-body p-4">
                         <Form onSubmit={handleSubmit(onSubmit)}>

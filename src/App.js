@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import LightController from "./components/lights";
 import LoginForm from "./components/login";
 import AppNavbar from "./components/navbar";
 import RegisterForm from "./components/register";
@@ -14,11 +15,15 @@ function App() {
     <div className="wrapper">
       <UserProvider>
         <Router>
-          <div className="container-fluid">
+          <div className="container">
             <AppNavbar />
           </div>
           <div className="container-fluid">
             <Switch>
+
+              <Route path="/lights">
+                <LightController/>
+              </Route>
               <Route path="/register">
                 <RegisterForm />
               </Route>
