@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import logo from './../images/logo_transparent.png'
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserPlus, faUser, faLightbulb } from "@fortawesome/free-solid-svg-icons";
+import { faUserPlus, faUser, faLightbulb, faLeaf } from "@fortawesome/free-solid-svg-icons";
 import Logout from "./logout";
 import { useUser } from "../context/user";
 
@@ -37,6 +37,7 @@ export default function AppNavbar() {
         users_buttons = user_connected_buttons;
         application_buttons = <React.Fragment>
             <Link className="btn btn-outline-secondary nav-link" to="/lights"><FontAwesomeIcon icon={faLightbulb} /> City Lights</Link>
+            <Link className="btn btn-outline-secondary nav-link ml-1" to="/devices"><FontAwesomeIcon icon={faLeaf} /> Devices</Link>
         </React.Fragment>
     }
 

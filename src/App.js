@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import IotDevice from "./components/iot_devices";
 import LightController from "./components/lights";
 import LoginForm from "./components/login";
 import AppNavbar from "./components/navbar";
@@ -20,7 +21,9 @@ function App() {
           </div>
           <div className="container-fluid">
             <Switch>
-
+            <Route path="/devices">
+                <IotDevice/>
+              </Route>              
               <Route path="/lights">
                 <LightController/>
               </Route>
