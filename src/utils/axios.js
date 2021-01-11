@@ -2,9 +2,9 @@
 const axios = require('axios');
 
 class ApiFetcher {
-    
+
     baseURL = '';
-    
+
     constructor(baseURL = 'http://localhost:8000/') {
         this.baseURL = baseURL;
         this.axiosInstance = axios.create({
@@ -12,7 +12,7 @@ class ApiFetcher {
         });
         this.setInterceptors();
     }
-    
+
     setCredentials(access_token, refresh_token) {
         this.access_token = access_token;
         this.refresh_token = refresh_token;
@@ -45,29 +45,29 @@ class ApiFetcher {
 
                     return Promise.reject(error);
                 }
-                
-                if (error.response.status === 401 && !originalRequest._retry) {
-                    console.log(originalRequest._retry);
-                    originalRequest._retry = true;
 
-                    return this.axiosInstance.post('api/token/refresh/', {
-                        refresh: this.refresh_token
-                    })
-                        .then(res => {
-                            if (res.status === 200) {
-                                this.userDispatch({
-                                    type: 'tokenRefreshed',
-                                    access_token: res.data.access,
-                                    refresh_token: res.data.refresh
-                                })
-                                return axios(originalRequest);
-                            }
-                        }).catch((error) => {
-                            console.log(error);
-                            this.userDispatch({
-                                type: 'tokenRefreshError'
-                            })
+                if (error.response.status === 401 && !originalRequest._retry) {
+                    originalRequest._retry = true;
+                    if (this.refresh_token) {
+                        return this.axiosInstance.post('api/token/refresh/', {
+                            refresh: this.refresh_token
                         })
+                            .then(res => {
+                                if (res.status === 200) {
+                                    this.userDispatch({
+                                        type: 'tokenRefreshed',
+                                        access_token: res.data.access,
+                                        refresh_token: res.data.refresh
+                                    })
+                                    return axios(originalRequest);
+                                }
+                            }).catch((error) => {
+                                console.log(error);
+                                this.userDispatch({
+                                    type: 'tokenRefreshError'
+                                })
+                            })
+                    }
 
                 }
                 return Promise.reject(error);

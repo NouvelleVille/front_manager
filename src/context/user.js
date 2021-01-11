@@ -139,6 +139,7 @@ function userReducer(state, action) {
                 trying: false
             }
         case 'tokenRefreshError':
+            console.log('tokenRefreshError invoked')
             clearTokens();
             return {
                 ...state,

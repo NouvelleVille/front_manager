@@ -7,11 +7,10 @@ function useDevices() {
 
         return apiFetcher.getAxiosInstance().get('api/iot/devices/?format=json')
         .then((response) => {
-
             return response.data;
         })
         .catch((error) => {
-            console.log(error);
+            return Promise.reject(error);   
         });
 
     }
